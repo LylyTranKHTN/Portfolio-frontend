@@ -1,5 +1,5 @@
 import React from 'react';
-import { Summary, Wrapper } from '../components';
+import { Summary, Wrapper } from '@components';
 
 const HomePage = () => {
   return (

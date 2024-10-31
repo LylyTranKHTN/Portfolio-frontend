@@ -5,19 +5,26 @@ import AvatarIcon from './AvatarIcon';
 interface MenuItem {
   key: string;
   name: string;
-  url: string;
+  path: string;
+  element?: JSX.Element;
+  errorElement?: JSX.Element;
 }
 
 interface MenuProps {
   items: MenuItem[];
+  activeKey: string;
 }
 
-const Menu = ({ items }: MenuProps) => {
+const Menu = ({ items, activeKey }: MenuProps) => {
   const divided = Math.floor(items.length / 2);
 
   const renderItem = (i: number) => (
     <div className="px-2 py-1">
-      <LinkButton key={items[i].key} href={items[i].url}>
+      <LinkButton
+        key={items[i].key}
+        href={items[i].path}
+        isActive={activeKey === items[i].path}
+      >
         {items[i].name}
       </LinkButton>
     </div>
