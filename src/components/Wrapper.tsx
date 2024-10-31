@@ -11,7 +11,7 @@ const Wrapper = ({ children }: WrapperProps) => {
   const currentUrl = window.location.pathname;
 
   return (
-    <div className="bg-primary-light h-svh w-svw justify-center">
+    <div className="bg-primary-light min-h-svh w-svw justify-center">
       <Menu items={menuItems} activeKey={currentUrl}></Menu>
       <div className=" m-auto w-fit pt-14">{children}</div>
     </div>

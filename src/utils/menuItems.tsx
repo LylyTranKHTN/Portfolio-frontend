@@ -2,6 +2,7 @@ import React from 'react';
 import Home from '../pages/home';
 import AboutMe from '../pages/aboutme';
 import Motivation from '../pages/motivation';
+import DesignPage from '../pages/design';
 
 const menuItems = [
   {
@@ -23,7 +24,12 @@ const menuItems = [
     path: '/motivation',
     element: <Motivation />,
   },
-  { key: 'design', name: 'Adjust Design', path: '/design' },
+  {
+    key: 'design',
+    name: 'Adjust Design',
+    path: '/design',
+    element: <DesignPage />,
+  },
   { key: 'contact', name: 'Contact', path: '/contact' },
 ];
 

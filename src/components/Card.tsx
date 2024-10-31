@@ -9,8 +9,7 @@ const Card = ({ children, className = '' }: CardProps) => {
   return (
     <div
       className={
-        'text-lg bg-white text-center p-5 border rounded-lg shadow-md m-5 ' +
-        className
+        'text-lg bg-white p-5 border rounded-lg shadow-md m-5' + className
       }
     >
       {children}
