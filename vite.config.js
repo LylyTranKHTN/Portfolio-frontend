@@ -17,6 +17,14 @@ export default defineConfig({
         find: '@components',
         replacement: path.resolve(projectRootDir, 'src/components/'),
       },
+      {
+        find: '@interfaces',
+        replacement: path.resolve(projectRootDir, 'src/interfaces/'),
+      },
+      {
+        find: '@apis',
+        replacement: path.resolve(projectRootDir, 'src/apis/'),
+      },
     ],
   },
 });

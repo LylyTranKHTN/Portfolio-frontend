@@ -3,6 +3,7 @@ import Home from '../pages/home';
 import AboutMe from '../pages/aboutme';
 import Motivation from '../pages/motivation';
 import DesignPage from '../pages/design';
+import ContactPage from '../pages/contact';
 
 const menuItems = [
   {
@@ -30,7 +31,12 @@ const menuItems = [
     path: '/design',
     element: <DesignPage />,
   },
-  { key: 'contact', name: 'Contact', path: '/contact' },
+  {
+    key: 'contact',
+    name: 'Contact',
+    path: '/contact',
+    element: <ContactPage />,
+  },
 ];
 
 export default menuItems;

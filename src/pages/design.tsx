@@ -1,10 +1,49 @@
-import { Card, Wrapper } from '@components';
-import React, { useState } from 'react';
+import ThemeAPI from '@apis/themeAPI';
+import { Button, Card, Wrapper } from '@components';
+import React, { useEffect, useState } from 'react';
 import { HexColorPicker, HexColorInput } from 'react-colorful';
+import { Theme } from '@interfaces';
+
+const themeAPI = new ThemeAPI();
 
 const DesignPage = () => {
-  const [primaryColor, setPrimaryColor] = useState('#aabbcc');
-  const [primaryLightColor, setPrimaryLightColor] = useState('#ddeeff');
+  const [themes, setThemes] = useState<Map<string, Theme>>();
+
+  useEffect(() => {
+    themeAPI.getThemes().then((themes) => {
+      // save as a Map for easier access
+      setThemes(new Map(themes.map((t: Theme) => [t.id, t])));
+    });
+  }, []);
+
+  // update theme state when user changes the color
+  const onThemeChange = (theme: Theme) => {
+    setThemes(themes?.set(theme.id, theme));
+  };
+
+  const saveColor = () => {
+    themeAPI.updateThemes(Array.from(themes?.values() || [])).then(() => {
+      alert('Theme updated');
+    });
+  };
+
+  const themeUpdateCards = themes?.entries().map(([id, theme]) => (
+    <Card key={id}>
+      <h2>{theme.name}</h2>
+      <div className="flex items-center">
+        <HexColorPicker
+          color={theme.value}
+          onChange={(value) => onThemeChange({ ...theme, value })}
+        />
+        <HexColorInput
+          color={theme.value}
+          onChange={(value) => onThemeChange({ ...theme, value })}
+        />
+      </div>
+    </Card>
+  ));
+
+  console.log(themeUpdateCards);
 
   return (
     <Wrapper>
@@ -17,31 +56,10 @@ const DesignPage = () => {
         </p>
       </Card>
 
-      <Card>
-        <p>Choose your favorite color:</p>
-        <HexColorPicker color={primaryColor} onChange={setPrimaryColor} />
-        <HexColorInput
-          color={primaryColor}
-          onChange={setPrimaryColor}
-          placeholder="Type a color"
-          prefixed
-          alpha
-        />
-      </Card>
+      {themeUpdateCards}
 
       <Card>
-        <p>Choose your secondary color:</p>
-        <HexColorPicker
-          color={primaryLightColor}
-          onChange={setPrimaryLightColor}
-        />
-        <HexColorInput
-          color={primaryLightColor}
-          onChange={setPrimaryLightColor}
-          placeholder="Type a color"
-          prefixed
-          alpha
-        />
+        <Button onClick={saveColor}>Save</Button>
       </Card>
     </Wrapper>
   );
