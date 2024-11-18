@@ -7,58 +7,79 @@ import { Theme } from '@interfaces';
 const themeAPI = new ThemeAPI();
 
 const DesignPage = () => {
-  const [themes, setThemes] = useState<Map<string, Theme>>();
+  const [themes, setThemes] = useState<Theme[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    themeAPI.getThemes().then((themes) => {
-      // save as a Map for easier access
-      setThemes(new Map(themes.map((t: Theme) => [t.id, t])));
-    });
+    themeAPI
+      .getThemes()
+      .then((themes) => {
+        setThemes(themes);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError('Failed to load themes');
+        setLoading(false);
+      });
   }, []);
 
-  // update theme state when user changes the color
   const onThemeChange = (theme: Theme) => {
-    setThemes(themes?.set(theme.id, theme));
+    setThemes((prevThemes) =>
+      prevThemes.map((t) => (t.id === theme.id ? theme : t))
+    );
   };
 
   const saveColor = () => {
-    themeAPI.updateThemes(Array.from(themes?.values() || [])).then(() => {
-      alert('Theme updated');
-    });
+    themeAPI
+      .updateThemes(themes)
+      .then(() => {
+        alert('Theme updated');
+      })
+      .catch(() => {
+        alert('Failed to update theme');
+      });
   };
 
-  const themeUpdateCards = themes?.entries().map(([id, theme]) => (
-    <Card key={id}>
-      <h2>{theme.name}</h2>
-      <div className="flex items-center">
-        <HexColorPicker
-          color={theme.value}
-          onChange={(value) => onThemeChange({ ...theme, value })}
-        />
-        <HexColorInput
-          color={theme.value}
-          onChange={(value) => onThemeChange({ ...theme, value })}
-        />
-      </div>
-    </Card>
-  ));
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
-  console.log(themeUpdateCards);
+  if (error) {
+    return <p>{error}</p>;
+  }
 
   return (
     <Wrapper>
       <Card>
-        <h1>Design My Porfolio</h1>
-
+        <h1>Design My Portfolio</h1>
         <p>
           Hei! If you don't like the design of my portfolio, you can adjust it
           here.
         </p>
       </Card>
 
-      {themeUpdateCards}
-
       <Card>
+        <div className="flex">
+          {themes.map((theme) => (
+            <div className="pr-6" key={theme.id}>
+              <h3 className="text-primary">{theme.title}</h3>
+              <i>{theme.description}</i>
+              <div className="">
+                <HexColorPicker
+                  color={theme.value}
+                  onChange={(value) => onThemeChange({ ...theme, value })}
+                />
+                <HexColorInput
+                  color={theme.value}
+                  onChange={(value) => onThemeChange({ ...theme, value })}
+                  prefixed
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+        <br />
         <Button onClick={saveColor}>Save</Button>
       </Card>
     </Wrapper>

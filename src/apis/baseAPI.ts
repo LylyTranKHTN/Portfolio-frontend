@@ -21,12 +21,12 @@ class BaseAPI {
     this.baseURL = `http://localhost:5173/api`;
   }
 
-  async get(url: string) {
+  async get<T>(url: string) {
     const response = await fetch(this.baseURL + url, { signal, headers });
     if (!response.ok) {
       throw new Error(response.statusText);
     }
-    return response.json().then((data) => {
+    return response.json().then((data: T) => {
       clearTimeout(timeoutId);
       return data;
     });
@@ -51,6 +51,7 @@ class BaseAPI {
   async put<T>(url: string, data: T) {
     const response = await fetch(this.baseURL + url, {
       signal,
+      headers,
       method: 'PUT',
       body: JSON.stringify(data),
     });

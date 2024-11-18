@@ -5,7 +5,7 @@ const THEME_URL = '/themes';
 
 class ThemeAPI extends BaseAPI {
   async getThemes() {
-    return await this.get(THEME_URL);
+    return await this.get<Theme[]>(THEME_URL);
   }
 
   async updateThemes(themes: Theme[]) {
