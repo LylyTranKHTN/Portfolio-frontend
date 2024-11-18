@@ -18,7 +18,7 @@ class BaseAPI {
   baseURL: string;
 
   constructor() {
-    this.baseURL = import.meta.env.VITE_BASE_API || 'http://localhost:3001';
+    this.baseURL = `http://localhost:5173/api`;
   }
 
   async get(url: string) {
