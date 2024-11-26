@@ -1,56 +1,38 @@
 import ThemeAPI from '@apis/themeAPI';
-import { Button, Card, Wrapper } from '@components';
-import React, { useEffect, useState } from 'react';
+import { Button, Card } from '@components';
+import React, { useState } from 'react';
 import { HexColorPicker, HexColorInput } from 'react-colorful';
 import { Theme } from '@interfaces';
+import { useAlert } from '../../contexts/alertContext';
 
 const themeAPI = new ThemeAPI();
 
-const DesignPage = () => {
-  const [themes, setThemes] = useState<Theme[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+interface DesignPageProps {
+  themes: Theme[];
+  onThemeChange: (theme: Theme) => void;
+}
 
-  useEffect(() => {
-    themeAPI
-      .getThemes()
-      .then((themes) => {
-        setThemes(themes);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError('Failed to load themes');
-        setLoading(false);
-      });
-  }, []);
+const DesignPage = ({ themes, onThemeChange }: DesignPageProps) => {
+  const [isSaving, setIsSaving] = useState(false);
 
-  const onThemeChange = (theme: Theme) => {
-    setThemes((prevThemes) =>
-      prevThemes.map((t) => (t.id === theme.id ? theme : t))
-    );
-  };
+  const alert = useAlert();
 
   const saveColor = () => {
+    setIsSaving(true);
     themeAPI
       .updateThemes(themes)
       .then(() => {
-        alert('Theme updated');
+        alert.showAlert('success', 'Theme updated successully');
+        setIsSaving(false);
       })
       .catch(() => {
-        alert('Failed to update theme');
+        alert.showAlert('error', 'Failed to update theme');
+        setIsSaving(false);
       });
   };
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>{error}</p>;
-  }
-
   return (
-    <Wrapper>
+    <div>
       <Card>
         <h1>Design My Portfolio</h1>
         <p>
@@ -80,9 +62,11 @@ const DesignPage = () => {
           ))}
         </div>
         <br />
-        <Button onClick={saveColor}>Save</Button>
+        <Button disabled={isSaving} onClick={saveColor}>
+          Save
+        </Button>
       </Card>
-    </Wrapper>
+    </div>
   );
 };
 

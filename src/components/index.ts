@@ -5,3 +5,4 @@ export { default as LinkButton } from './LinkButton';
 export { default as Wrapper } from './Wrapper';
 export { default as Menu } from './Menu';
 export { default as Card } from './Card';
+export { default as Loading } from './Loading';

@@ -16,15 +16,12 @@ interface MenuProps {
 }
 
 const Menu = ({ items, activeKey }: MenuProps) => {
+  // half the items
   const divided = Math.floor(items.length / 2);
 
   const renderItem = (i: number) => (
-    <div className="px-2 py-1">
-      <LinkButton
-        key={items[i].key}
-        href={items[i].path}
-        isActive={activeKey === items[i].path}
-      >
+    <div className="px-2 py-1" key={items[i].key}>
+      <LinkButton href={items[i].path} isActive={activeKey === items[i].path}>
         {items[i].name}
       </LinkButton>
     </div>
@@ -33,12 +30,12 @@ const Menu = ({ items, activeKey }: MenuProps) => {
   return (
     <div className="flex items-center justify-center w-full p-2 border-b fixed top-0 left-0 drop-shadow-sm bg-white">
       {items.slice(0, divided).map((_, i) => renderItem(i))}
-      {
-        <AvatarIcon
-          src="https://avatars.githubusercontent.com/u/6713782?v=4"
-          alt="avatar"
-        />
-      }
+
+      <AvatarIcon
+        src="https://avatars.githubusercontent.com/u/6713782?v=4"
+        alt="avatar"
+      />
+
       {items.slice(divided).map((_, i) => renderItem(divided + i))}
     </div>
   );
