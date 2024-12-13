@@ -83,7 +83,7 @@ const AlertProvider = ({ children }: AlertProviderProps) => {
       {state.type === 'SHOW_ALERT' && (
         <Card className={className}>
           <div className="columns-2 flex">
-            <span className="w-full">Alert</span>
+            <span className="w-full">{state.message}</span>
             <button
               className="w-2 h-2 border-none hover:font-extrabold"
               onClick={hideAlert}

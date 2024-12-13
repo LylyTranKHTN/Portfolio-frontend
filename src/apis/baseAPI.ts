@@ -18,7 +18,7 @@ class BaseAPI {
   baseURL: string;
 
   constructor() {
-    this.baseURL = `http://localhost:5173/api`;
+    this.baseURL = `api`;
   }
 
   async get<T>(url: string) {

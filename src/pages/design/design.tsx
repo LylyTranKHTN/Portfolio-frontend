@@ -22,7 +22,10 @@ const DesignPage = ({ themes, onThemeChange }: DesignPageProps) => {
     themeAPI
       .updateThemes(themes)
       .then(() => {
-        alert.showAlert('success', 'Theme updated successully');
+        alert.showAlert(
+          'success',
+          'Theme updated successully! Reload the page if you with to change theme'
+        );
         setIsSaving(false);
       })
       .catch(() => {
@@ -42,17 +45,18 @@ const DesignPage = ({ themes, onThemeChange }: DesignPageProps) => {
       </Card>
 
       <Card>
-        <div className="flex">
+        <div className="grid justify-center gap-y-5 md:grid-cols-2 md:justify-between">
           {themes.map((theme) => (
-            <div className="pr-6" key={theme.id}>
+            <div className="w-fit" key={theme.id}>
               <h3 className="text-primary">{theme.title}</h3>
-              <i>{theme.description}</i>
-              <div className="">
+              <i className="pr-4">{theme.description}</i>
+              <div className="grid justify-items-center">
                 <HexColorPicker
                   color={theme.value}
                   onChange={(value) => onThemeChange({ ...theme, value })}
                 />
                 <HexColorInput
+                  style={{ width: '100px' }}
                   color={theme.value}
                   onChange={(value) => onThemeChange({ ...theme, value })}
                   prefixed

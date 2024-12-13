@@ -1,5 +1,5 @@
 import React from 'react';
-import { Wrapper } from '../components';
+import { LinkButton, Wrapper } from '../components';
 import Card from '../components/Card';
 
 const MotivationPage = () => {
@@ -7,12 +7,31 @@ const MotivationPage = () => {
     <Wrapper>
       <Card>
         <h1 className="text-4xl font-bold">Motivation</h1>
-        <p className="text-lg">
-          I am a software engineer with a passion for web development. I have
-          experience with React, Node.js, and other web technologies. I am
-          always eager to learn new things and improve my skills. In my free
-          time, I enjoy reading, hiking, and playing video games.
-        </p>
+        <h3 className="text-lg">
+          This is not a beautiful kind of porfolio I created this portfolio not
+          only to showcase my skills and experience.
+        </h3>
+
+        <h3 className="text-lg">
+          I also wanted to applied what I have learned and what I am studying
+          into this project.
+        </h3>
+
+        <ul>
+          <li>1. I wanted to develop my skill on BE development and DevOps</li>
+          <li>
+            2. I will add more features day by day, so it not the last version
+            that you are seeing.
+          </li>
+          <li>
+            3. You can change the theme of this portfolio by clicking go to{' '}
+            <LinkButton href="/design">Design</LinkButton> tab.
+          </li>
+          <li>
+            4. You can give me some advise or ideal in{' '}
+            <LinkButton href="/contact">Contact</LinkButton> tab
+          </li>{' '}
+        </ul>
       </Card>
     </Wrapper>
   );

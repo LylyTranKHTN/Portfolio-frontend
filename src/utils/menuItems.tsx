@@ -1,6 +1,5 @@
 import React from 'react';
 import Home from '../pages/home';
-import AboutMe from '../pages/aboutme';
 import Motivation from '../pages/motivation';
 import DesignPage from '../pages/design';
 import ContactPage from '../pages/contact';
@@ -13,13 +12,6 @@ const menuItems = [
     element: <Home />,
   },
   {
-    key: 'about-me',
-    name: 'About Me',
-    path: '/about-me',
-    element: <AboutMe />,
-  },
-
-  {
     key: 'motivation',
     name: 'Motivation',
     path: '/motivation',
@@ -27,7 +19,7 @@ const menuItems = [
   },
   {
     key: 'design',
-    name: 'Adjust Design',
+    name: 'Design',
     path: '/design',
     element: <DesignPage />,
   },
